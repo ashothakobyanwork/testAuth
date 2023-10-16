@@ -3,7 +3,7 @@ import {responseErrors} from '~/constants/form';
 
 interface ShowValidationErrorOptions<TFormValues> {
   error: ErrorStatus;
-  errorFields: string[];
+  errorFields?: string[];
   fields?: Array<keyof TFormValues>;
   setFieldError?: (name: keyof TFormValues, value: string) => void;
   setErrorInCase?: () => void;
@@ -16,13 +16,16 @@ export function processGqlErrorResponse<TFormValues>({
   setFieldError,
   setErrorInCase,
 }: ShowValidationErrorOptions<TFormValues>): void {
-  if (errorFields?.length) {
-    fields?.forEach(field => {
-      if (errorFields.includes(field as string) && setFieldError) {
-        setFieldError(field, responseErrors[error]);
-      }
-    });
-  } else if (setErrorInCase) {
-    setErrorInCase();
+  if (error === responseErrors.NOT_AUTHENTICATED) {
+  } else {
+    if (errorFields?.length) {
+      fields?.forEach(field => {
+        if (errorFields.includes(field as string) && setFieldError) {
+          setFieldError(field, responseErrors[error]);
+        }
+      });
+    } else if (setErrorInCase) {
+      setErrorInCase();
+    }
   }
 }

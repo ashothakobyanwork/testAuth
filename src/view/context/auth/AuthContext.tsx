@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({
     useState<TAuthContext['isAuthenticated']>(false);
 
   const [fetchMe, {loading: meLoading}] = useGetMeLazyQuery({
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
     onCompleted: res => {
       if (res.getMe.__typename === 'User') {
         setIsAuthenticated(true);
@@ -49,6 +49,8 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({
   useEffect(() => {
     const getToken = async () => {
       const token = await getStorageValue(ACCESS_TOKEN_KEY, undefined);
+      console.log(token, 'token');
+
       if (token && !me) {
         fetchMe();
       }
@@ -67,7 +69,7 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({
               `Bearer ${res?.createTokens?.accessToken}`,
             );
             setStorageValue(REFRESH_TOKEN_KEY, res.createTokens.refreshToken);
-            // fetchMe();
+            fetchMe();
             if (_onSuccess) {
               _onSuccess(res.createTokens);
             }
@@ -82,7 +84,7 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({
         },
       });
     },
-    [signIn],
+    [fetchMe, signIn],
   );
 
   const onSignOut = useCallback((callback?: () => void) => {

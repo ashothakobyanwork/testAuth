@@ -6,9 +6,9 @@ import * as yup from 'yup';
 import {formErrors} from '~/constants/form';
 import {PhoneNumberUtil} from 'google-libphonenumber';
 import {useNavigation} from '@react-navigation/native';
-import {useCreateTokensLazyQuery} from '~/apollo/graphql/queries/signIn.generated';
 import {logger} from '~/utils/logger';
 import {processGqlErrorResponse} from '~/utils/processGqlErrorResponse';
+import {useAuth} from '~/view/hooks/useAuth';
 
 interface UseSignInFormValues {
   login: string;
@@ -54,40 +54,33 @@ export function useSignInForm(): UseSignInPhoneReturnType {
     resolver: yupResolver(validation),
   });
   const navigation = useNavigation();
-  const [signIn, {loading}] = useCreateTokensLazyQuery({
-    fetchPolicy: 'network-only',
-  });
+  const {onSignIn, isLoading} = useAuth();
 
   const handleSubmit = useCallback(
     async (values: UseSignInFormValues) => {
       try {
-        const {data} = await signIn({
-          variables: values,
-        });
-        if (data?.createTokens.__typename === 'ErrorWithFields') {
+        onSignIn(values, error =>
           processGqlErrorResponse<UseSignInFormValues>({
             fields: ['login', 'password'],
-            errorFields: data.createTokens.fields,
-            error: data.createTokens.status,
+            errorFields: error.fields,
+            error: error.status,
             setFieldError: (name, message) => form.setError(name, {message}),
-          });
-        } else if (data?.createTokens.__typename === 'TokenPair') {
-          const response = data?.createTokens;
-        }
+          }),
+        );
       } catch (e) {
         logger.warn(e);
       }
       // navigation.navigate(RootStackRouts.Tabs, {screen: TabsStackRouts.Home});
     },
-    [form, signIn],
+    [form, onSignIn],
   );
 
   return useMemo(
     () => ({
-      isLoading: loading,
+      isLoading,
       form,
       handleSubmit: form.handleSubmit(handleSubmit),
     }),
-    [form, handleSubmit, loading],
+    [form, handleSubmit, isLoading],
   );
 }

@@ -1,7 +1,10 @@
-import {ApolloClient, InMemoryCache} from '@apollo/client';
+import {ApolloClient, ApolloLink, InMemoryCache} from '@apollo/client';
+import {httpLink, requestLink} from './client.helpers';
+
+const link = ApolloLink.from([requestLink, httpLink]);
 
 const client = new ApolloClient({
-  uri: 'https://api.quickclick.online/content/graphql',
+  link,
   cache: new InMemoryCache(),
 });
 
