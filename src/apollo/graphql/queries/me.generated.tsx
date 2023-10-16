@@ -1,37 +1,56 @@
 import * as Types from '../../generated/types';
 
-import { gql } from '@apollo/client';
+import {gql} from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetMeQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type GetMeQueryVariables = Types.Exact<{[key: string]: never}>;
 
-
-export type GetMeQuery = { __typename?: 'Query', getMe: { __typename?: 'BaseError', status: Types.ErrorStatus } | { __typename?: 'User', id: string, name: string, email?: string | null, phone: string, address?: { __typename?: 'AddressOut', city: string, coordinates: Array<{ __typename?: 'CoordinateOut', address?: string | null, lat: number, lng: number }> } | null } };
-
+export type GetMeQuery = {
+  __typename?: 'Query';
+  getMe:
+    | {__typename?: 'BaseError'; status: Types.ErrorStatus}
+    | {
+        __typename?: 'User';
+        id: string;
+        name: string;
+        email?: string | null;
+        phone: string;
+        address?: {
+          __typename?: 'AddressOut';
+          city: string;
+          coordinates: Array<{
+            __typename?: 'CoordinateOut';
+            address?: string | null;
+            lat: number;
+            lng: number;
+          }>;
+        } | null;
+      };
+};
 
 export const GetMeDocument = gql`
-    query GetMe {
-  getMe {
-    ... on User {
-      id
-      name
-      email
-      phone
-      address {
-        city
-        coordinates {
-          address
-          lat
-          lng
+  query GetMe {
+    getMe {
+      ... on User {
+        id
+        name
+        email
+        phone
+        address {
+          city
+          coordinates {
+            address
+            lat
+            lng
+          }
         }
       }
-    }
-    ... on BaseError {
-      status
+      ... on BaseError {
+        status
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGetMeQuery__
@@ -48,14 +67,27 @@ export const GetMeDocument = gql`
  *   },
  * });
  */
-export function useGetMeQuery(baseOptions?: Apollo.QueryHookOptions<GetMeQuery, GetMeQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetMeQuery, GetMeQueryVariables>(GetMeDocument, options);
-      }
-export function useGetMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMeQuery, GetMeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetMeQuery, GetMeQueryVariables>(GetMeDocument, options);
-        }
+export function useGetMeQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetMeQuery, GetMeQueryVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<GetMeQuery, GetMeQueryVariables>(
+    GetMeDocument,
+    options,
+  );
+}
+export function useGetMeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetMeQuery, GetMeQueryVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<GetMeQuery, GetMeQueryVariables>(
+    GetMeDocument,
+    options,
+  );
+}
 export type GetMeQueryHookResult = ReturnType<typeof useGetMeQuery>;
 export type GetMeLazyQueryHookResult = ReturnType<typeof useGetMeLazyQuery>;
-export type GetMeQueryResult = Apollo.QueryResult<GetMeQuery, GetMeQueryVariables>;
+export type GetMeQueryResult = Apollo.QueryResult<
+  GetMeQuery,
+  GetMeQueryVariables
+>;

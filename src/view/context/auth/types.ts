@@ -15,4 +15,5 @@ export type TAuthContext = {
     _onFail?: (error: ErrorWithFields) => void,
     _onSuccess?: (data: TokenPair) => void,
   ) => void;
+  onSignOut: () => void;
 };

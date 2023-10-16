@@ -22,6 +22,7 @@ export const AuthContext = createContext<TAuthContext>({
   isLoading: false,
   checkingAuth: false,
   isAuthenticated: false,
+  onSignOut: () => undefined,
   onSignIn: () => undefined,
 });
 
@@ -86,15 +87,11 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({
     [fetchMe, signIn],
   );
 
-  const onSignOut = useCallback((callback?: () => void) => {
+  const onSignOut = useCallback(() => {
     removeStorageValue(ACCESS_TOKEN_KEY);
     removeStorageValue(REFRESH_TOKEN_KEY);
     setIsAuthenticated(false);
-    callback?.();
   }, []);
-
-  // @ts-ignore
-  global.signOut = onSignOut;
 
   const value: TAuthContext = useMemo(
     () => ({
@@ -103,8 +100,9 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({
       checkingAuth: meLoading,
       me,
       onSignIn,
+      onSignOut,
     }),
-    [isAuthenticated, signInLoading, meLoading, me, onSignIn],
+    [isAuthenticated, signInLoading, meLoading, me, onSignIn, onSignOut],
   );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

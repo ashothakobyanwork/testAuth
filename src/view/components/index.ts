@@ -2,6 +2,8 @@ export {default as MainContainer} from './MainContainer';
 export {default as StackHeader} from './Header';
 export {default as SvgIcon} from './SvgIcon';
 export {default as TabBar} from './TabBar';
+export {default as ProfileHeader} from './ProfileHeader';
+export {default as ProfileContext} from './ProfileContext';
 
 //uiKit
 export {default as AppText} from './uiKit/AppText';
