@@ -9,6 +9,8 @@ import {useNavigation} from '@react-navigation/native';
 import {logger} from '~/utils/logger';
 import {processGqlErrorResponse} from '~/utils/processGqlErrorResponse';
 import {useAuth} from '~/view/hooks/useAuth';
+import {RootStackRouts} from '~/view/navigation/appNavigator/types';
+import {TabsStackRouts} from '~/view/navigation/tabBar/types';
 
 interface UseSignInFormValues {
   login: string;
@@ -59,20 +61,26 @@ export function useSignInForm(): UseSignInPhoneReturnType {
   const handleSubmit = useCallback(
     async (values: UseSignInFormValues) => {
       try {
-        onSignIn(values, error =>
-          processGqlErrorResponse<UseSignInFormValues>({
-            fields: ['login', 'password'],
-            errorFields: error.fields,
-            error: error.status,
-            setFieldError: (name, message) => form.setError(name, {message}),
-          }),
+        onSignIn(
+          values,
+          error =>
+            processGqlErrorResponse<UseSignInFormValues>({
+              fields: ['login', 'password'],
+              errorFields: error.fields,
+              error: error.status,
+              setFieldError: (name, message) => form.setError(name, {message}),
+            }),
+          () => {
+            navigation.navigate(RootStackRouts.Tabs, {
+              screen: TabsStackRouts.Home,
+            });
+          },
         );
       } catch (e) {
         logger.warn(e);
       }
-      // navigation.navigate(RootStackRouts.Tabs, {screen: TabsStackRouts.Home});
     },
-    [form, onSignIn],
+    [form, navigation, onSignIn],
   );
 
   return useMemo(

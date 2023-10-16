@@ -1,10 +1,8 @@
 import {getResponsiveHeight, getResponsiveWidth} from '~/utils/responsive';
-import {theme} from '~/view/styles/theme';
 import {makeStyles} from '~/view/styles/types';
 
 const useStyles = makeStyles({
   container: {
-    backgroundColor: theme.colors.white,
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',

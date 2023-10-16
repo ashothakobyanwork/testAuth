@@ -1,12 +1,11 @@
 import React from 'react';
-import {View} from 'react-native';
-import {AppText} from '~/view/components';
+import {AppText, MainContainer} from '~/view/components';
 
 const Gift = () => {
   return (
-    <View>
+    <MainContainer>
       <AppText>Gift</AppText>
-    </View>
+    </MainContainer>
   );
 };
 

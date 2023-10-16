@@ -49,7 +49,6 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({
   useEffect(() => {
     const getToken = async () => {
       const token = await getStorageValue(ACCESS_TOKEN_KEY, undefined);
-      console.log(token, 'token');
 
       if (token && !me) {
         fetchMe();

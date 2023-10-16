@@ -1,12 +1,11 @@
 import React from 'react';
-import {View} from 'react-native';
-import {AppText} from '~/view/components';
+import {AppText, MainContainer} from '~/view/components';
 
 const Favorite = () => {
   return (
-    <View>
+    <MainContainer>
       <AppText>Favorite</AppText>
-    </View>
+    </MainContainer>
   );
 };
 

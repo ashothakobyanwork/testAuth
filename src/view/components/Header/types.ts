@@ -1,5 +1,5 @@
 import {Dispatch, SetStateAction} from 'react';
-import {ViewStyle} from 'react-native';
+import {TextStyle, ViewStyle} from 'react-native';
 import {IconName} from '../SvgIcon';
 
 export interface LocalProps {
@@ -10,7 +10,7 @@ export type Props = {
   text?: string;
   style?: ViewStyle;
   leftIconName?: IconName;
-  textStyle?: ViewStyle;
+  textStyle?: TextStyle;
   leftContainerStyle?: ViewStyle;
   iconSize?: number;
   hideLeftIcon?: boolean;

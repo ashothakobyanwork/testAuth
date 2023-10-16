@@ -21,6 +21,7 @@
     "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
+    "apollo-link-token-refresh": "^0.6.0",
     "babel-plugin-module-resolver": "^5.0.0",
     "google-libphonenumber": "^3.2.33",
     "graphql": "^16.8.1",

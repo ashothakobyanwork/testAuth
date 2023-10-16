@@ -38,6 +38,11 @@ export const theme: Theme = {
       fontSize: getResponsiveValue(20),
       lineHeight: getResponsiveValue(24),
     },
+    h2: {
+      fontFamily: FontFamily.BOLD,
+      fontSize: getResponsiveValue(40),
+      lineHeight: getResponsiveValue(50),
+    },
     p1: {
       fontFamily: FontFamily.REGULAR,
       fontSize: getResponsiveValue(16),
@@ -52,6 +57,11 @@ export const theme: Theme = {
       fontFamily: FontFamily.MEDIUM,
       fontSize: getResponsiveValue(16),
       lineHeight: getResponsiveValue(28),
+    },
+    p4: {
+      fontFamily: FontFamily.REGULAR,
+      fontSize: getResponsiveValue(14),
+      lineHeight: getResponsiveValue(16.71),
     },
   },
 };

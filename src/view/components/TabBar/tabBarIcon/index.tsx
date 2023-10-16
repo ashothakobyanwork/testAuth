@@ -55,7 +55,7 @@ const TabBarIcon: React.FC<Props> = ({
       hitSlop={10}>
       <SvgIcon
         name={tabIcons[route.name]}
-        size={20}
+        size={32}
         fill={theme.colors.orange}
       />
     </Pressable>

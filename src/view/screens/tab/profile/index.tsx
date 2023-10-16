@@ -1,12 +1,11 @@
 import React from 'react';
-import {View} from 'react-native';
-import {AppText} from '~/view/components';
+import {AppText, MainContainer} from '~/view/components';
 
 const Profile = () => {
   return (
-    <View>
+    <MainContainer>
       <AppText>Profile</AppText>
-    </View>
+    </MainContainer>
   );
 };
 

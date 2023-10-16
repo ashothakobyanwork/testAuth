@@ -1,6 +1,6 @@
 import {ImageStyle, TextStyle, ViewStyle} from 'react-native';
 
-export type TextVariant = 'h1' | 'p1' | 'p2' | 'p3';
+export type TextVariant = 'h1' | 'h2' | 'p1' | 'p2' | 'p3' | 'p4';
 
 export interface TextThemeProps {
   fontFamily: string;

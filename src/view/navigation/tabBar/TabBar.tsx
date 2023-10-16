@@ -14,7 +14,9 @@ const Tab = createBottomTabNavigator<TabsStackParamList>();
 const TabNavigator: React.FC = () => {
   return (
     <Tab.Navigator
-      screenOptions={screenOptions}
+      screenOptions={{
+        ...screenOptions,
+      }}
       // eslint-disable-next-line react/no-unstable-nested-components
       tabBar={props => <TabBar {...props} />}
       initialRouteName={TabsStackRouts.Home}>

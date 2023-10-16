@@ -4,17 +4,17 @@ import {theme} from '~/view/styles/theme';
 
 const styles = StyleSheet.create({
   container: {
-    height: getResponsiveHeight(95),
+    height: getResponsiveHeight(75),
     left: 0,
     bottom: 0,
     right: 0,
     flexDirection: 'row',
     justifyContent: 'space-around',
     backgroundColor: theme.colors.white,
-    paddingTop: getResponsiveHeight(15),
+    paddingTop: getResponsiveHeight(10),
     overflow: 'visible',
-    borderTopWidth: 0.5,
-    borderTopColor: theme.colors.gray[2],
+    position: 'absolute',
+    borderRadius: 11,
   },
   tab: {
     alignItems: 'center',
@@ -32,11 +32,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     alignItems: 'center',
     justifyContent: 'flex-start',
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
   },
   text: {
     marginTop: 6,
