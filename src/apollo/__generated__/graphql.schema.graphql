@@ -1,0 +1,1494 @@
+type AccessToken {
+  accessToken: String!
+}
+
+input AddContentViewsIn {
+  contentType: ViewsContentType!
+  ids: [ID!]!
+}
+
+type AdditionalInfo {
+  advantage: String
+  hasDelivery: Boolean!
+}
+
+input AdditionalInfoIn {
+  advantage: String = null
+  hasDelivery: Boolean! = false
+}
+
+input AddressIn {
+  city: String!
+  coordinates: [CoordinateIn!]!
+}
+
+type AddressOut {
+  city: String!
+  coordinates: [CoordinateOut!]!
+}
+
+type Album {
+  author: User!
+  content(limit: Int! = 20, skip: Int! = 0): [Publication!]!
+  contentType: AlbumContentType!
+  cover: File!
+  createdAt: String!
+  description: String
+  id: ID!
+  internalCover: File
+  name: String!
+  policy: VisibilityPolicy!
+  updatedAt: String!
+}
+
+input AlbumContentInUpdate {
+  addedContent: [ID!]!
+  removedContent: [ID!]!
+}
+
+enum AlbumContentType {
+  PHOTO_VIDEO
+  PRODUCT
+  PUBLICATION
+  STORY
+}
+
+input AlbumIn {
+  content: [String!]!
+  contentType: AlbumContentType!
+  coverId: ID!
+  description: String = null
+  internalCoverId: ID = null
+  name: String!
+  policy: VisibilityPolicy!
+}
+
+input AlbumInUpdate {
+  coverId: ID = null
+  description: String
+  internalCoverId: ID
+  name: String
+  policy: VisibilityPolicy
+}
+
+type Albums {
+  cover: File
+  list: [Album!]!
+}
+
+type AppointmentContent {
+  data: Product
+  metadata: ContentMetadata!
+}
+
+type AppointmentMessage implements Message {
+  author: User!
+  chat: Chat!
+  createdAt: String!
+  id: ID!
+  isEdited: Boolean!
+  references: [RecordType!]!
+  service: AppointmentContent!
+  text: String!
+  time: String!
+  updatedAt: String!
+}
+
+input AppointmentMessageIn {
+  serviceId: ID!
+  text: String!
+  time: String!
+}
+
+union AppointmentMessageOrEWF = AppointmentMessage | ErrorWithFields
+
+type Article {
+  attachments: [File!]!
+  author: User!
+  commentsCount: Int!
+  createdAt: String!
+  id: ID!
+  is18Plus: Boolean!
+  isCommentable: Boolean!
+  isFavourite: Boolean!
+  isFollowing: Boolean!
+  isLiked: Boolean!
+  likesCount: Int!
+  name: String
+  tags: [String!]!
+  text: String!
+  topic: Topic
+  unreadCommentsCount: Int!
+  updatedAt: String!
+  viewsCount: Int!
+}
+
+input ArticleIn {
+  attachmentIds: [ID!] = null
+  is18Plus: Boolean!
+  isCommentable: Boolean! = true
+  name: String = null
+  tags: [String!] = null
+  text: String!
+  topicId: ID = null
+}
+
+input ArticleInUpdate {
+  attachmentIds: [ID!] = null
+  is18Plus: Boolean
+  isCommentable: Boolean
+  name: String
+  tags: [String!] = null
+  text: String
+  topicId: ID
+}
+
+type ArticleList {
+  articles: [Article!]!
+  total: Int!
+}
+
+union ArticleListOrBE = ArticleList | BaseError
+
+union ArticleOrBE = Article | BaseError
+
+union ArticleOrEWF = Article | ErrorWithFields
+
+type BaseError {
+  status: ErrorStatus!
+}
+
+type Blog {
+  articles(limit: Int! = 20, skip: Int! = 0): [Article!]!
+  author: User!
+  avatar: File
+  cover: File
+  id: ID!
+  name: String!
+  topics(limit: Int! = 20, skip: Int! = 0): [Topic!]!
+}
+
+input BlogIn {
+  avatarId: ID = null
+  coverId: ID = null
+  name: String!
+}
+
+input BlogInUpdate {
+  avatarId: ID
+  coverId: ID
+  name: String
+}
+
+union BlogOrEWF = Blog | ErrorWithFields
+
+type BooleanObject {
+  boolean: Boolean!
+}
+
+union BooleanObjectOrBE = BaseError | BooleanObject
+
+type CartItem {
+  id: ID!
+  product: Product!
+  selectedProperties: [RecordType!]!
+}
+
+input CartItemIn {
+  id: ID!
+  selectedProperties: [RecordTypeIn!] = null
+}
+
+type CartItems {
+  fullAmount: Int!
+  fullPrice: Int!
+  items: [CartItem!]!
+}
+
+union CartItemsOrBE = BaseError | CartItems
+
+type Catalog {
+  author: User!
+  collections(limit: Int! = 20, skip: Int! = 0): [Collection!]!
+  cover: File
+  createdAt: String!
+  id: ID!
+  pdf: File
+  updatedAt: String!
+}
+
+input CatalogInUpdate {
+  coverId: ID
+  pdfCatalogId: ID
+}
+
+union CatalogOrBE = BaseError | Catalog
+
+type Chat {
+  createdAt: String!
+  id: ID!
+  isFollowing: Boolean!
+  isMuted: Boolean!
+  isTechSupport: Boolean!
+  lastMessage: LastMessage
+  lastReadTimestamp: String!
+  logo: File
+  name: String
+  unreadMessageCount: Int!
+  updatedAt: String!
+  user: User
+}
+
+type ChatList {
+  items: [Chat!]!
+  total: Int!
+}
+
+union ChatListOrBE = BaseError | ChatList
+
+union ChatOrBE = BaseError | Chat
+
+enum CodeTransport {
+  EMAIL
+  PHONE
+}
+
+type Collection {
+  author: User!
+  cover: File!
+  createdAt: String!
+  id: ID!
+  name: String!
+  updatedAt: String!
+}
+
+input CollectionIn {
+  coverId: ID!
+  name: String!
+}
+
+input CollectionInUpdate {
+  coverId: ID = null
+  name: String = null
+}
+
+union CollectionOrBE = BaseError | Collection
+
+union CollectionOrEWF = Collection | ErrorWithFields
+
+union Comment = DeletedComment | ExistingComment
+
+input CommentContentIn {
+  id: ID!
+  type: CommentContentType!
+}
+
+enum CommentContentType {
+  ARTICLE
+  COMMENT
+  PUBLICATION
+}
+
+input CommentIn {
+  content: CommentContentIn!
+  text: String!
+}
+
+type CommentList {
+  comments: [Comment!]!
+  total: Int!
+}
+
+union CommentListOrEWF = CommentList | ErrorWithFields
+
+enum CommentReactionType {
+  CRYING_FACE
+  FACE_WITH_OPEN_MOUTH
+  FACE_WITH_TEARS
+  FOLDER_HANDS
+  PILE_OF_POO
+  POUTING_FACE
+  THUMBS_UP
+}
+
+type CommentReactions {
+  myReaction: CommentReactionType
+  reactions: [Reaction!]!
+}
+
+union CommentTarget = Article | DeletedComment | ExistingComment | Publication
+
+type CommentWithReplies {
+  comment: Comment!
+  replies: [Comment!]!
+  total: Int!
+}
+
+type CommentWithRepliesList {
+  comments: [CommentWithReplies!]!
+  total: Int!
+}
+
+union CommentWithRepliesListOrEWF = CommentWithRepliesList | ErrorWithFields
+
+union CommentWithRepliesOrEWF = CommentWithReplies | ErrorWithFields
+
+type Complaint {
+  authorId: ID!
+  comment: String
+  complaintFinalType: ComplaintType
+  complaintType: ComplaintType!
+  contentId: ID!
+  contentType: ComplaintContentType!
+  createdAt: String!
+  decision: ComplaintDecision
+  decisionMadeAt: String
+  id: ID!
+  updatedAt: String!
+}
+
+enum ComplaintContentType {
+  ARTICLE
+  PRODUCT
+  PUBLICATION
+  STORY
+}
+
+enum ComplaintDecision {
+  ACCEPTED
+  REJECTED
+}
+
+type ComplaintFinalType {
+  complaintFinalType: ComplaintType!
+}
+
+input ComplaintIn {
+  comment: String = null
+  complaintType: ComplaintType!
+  contentId: ID!
+  contentType: ComplaintContentType!
+}
+
+input ComplaintMetadataIn {
+  contentId: ID!
+  contentType: ComplaintContentType!
+}
+
+enum ComplaintType {
+  APPEALS_TO_VIOLENCE
+  FRAUD
+  ILLEGAL_GOODS
+  MISINFORMATION
+  NOT_SET_AS_18_PLUS
+  PORNOGRAPHY
+  SPAM
+  VIOLATION_OF_INTELLECTUAL_RIGHTS
+  VIOLENCE
+}
+
+type ComplaintsList {
+  complaints: [Complaint!]!
+}
+
+input ContactsIn {
+  email: String!
+  message: String!
+  name: String!
+}
+
+type ContentMetadata {
+  id: ID!
+  isBlocked: Boolean!
+  type: ForwardedMessageMetadataContentType!
+}
+
+input CoordinateIn {
+  address: String
+  lat: Float!
+  lng: Float!
+}
+
+type CoordinateOut {
+  address: String
+  lat: Float!
+  lng: Float!
+}
+
+union CreateAlbumResponse = Album | ErrorWithFields
+
+union CreateComplaintOrEWF = Complaint | ErrorWithFields
+
+union CreateStoryOrEWF = ErrorWithFields | Story
+
+union CreateTokensResponse = ErrorWithFields | TokenPair
+
+type DayWorkingHours {
+  hours: WorkingHours
+  status: WorkingDayStatus!
+}
+
+input DayWorkingHoursIn {
+  hours: WorkingHoursIn = null
+  status: WorkingDayStatus!
+}
+
+type DeletedComment implements IBaseComment {
+  author: User!
+  createdAt: String!
+  hasBeenRead: Boolean!
+  id: ID!
+  target: CommentTarget!
+  updatedAt: String!
+}
+
+enum ErrorStatus {
+  ALREADY_DONE
+  ALREADY_EXIST
+  INVALID_INPUT_DATA
+  NOT_AUTHENTICATED
+  NOT_ENOUGH_PERMISSIONS
+  NOT_FOUND
+}
+
+type ErrorWithFields {
+  fields: [String!]!
+  status: ErrorStatus!
+}
+
+type ExistingComment implements IBaseComment {
+  author: User!
+  createdAt: String!
+  hasBeenRead: Boolean!
+  id: ID!
+  isLiked: Boolean!
+  likesCount: Int!
+  reactions: CommentReactions!
+  references: [RecordType!]!
+  target: CommentTarget!
+  text: String!
+  updatedAt: String!
+}
+
+union ExistingCommentOrEWF = ErrorWithFields | ExistingComment
+
+enum FavouriteContentType {
+  ARTICLE
+  PRODUCT
+  PUBLICATION
+}
+
+input FavouriteIn {
+  contentType: FavouriteContentType!
+  id: ID!
+}
+
+type File {
+  checksum: String
+  createdAt: String!
+  id: ID!
+  name: String
+  path: String!
+  size: Int
+  type: String!
+  updatedAt: String!
+}
+
+input ForwardMessageIn {
+  contentId: ID!
+  contentType: ForwardedMessageMetadataContentType!
+  text: String!
+}
+
+type ForwardedContent {
+  data: ForwardedContentData
+  metadata: ContentMetadata!
+}
+
+union ForwardedContentData = Article | Product | Publication | Story
+
+type ForwardedMessage implements Message {
+  author: User!
+  chat: Chat!
+  createdAt: String!
+  forwardedContent: ForwardedContent!
+  id: ID!
+  isEdited: Boolean!
+  references: [RecordType!]!
+  text: String!
+  updatedAt: String!
+}
+
+enum ForwardedMessageMetadataContentType {
+  ARTICLE
+  PRODUCT
+  PUBLICATION
+  STORY
+}
+
+union ForwardedMessageOrEWF = ErrorWithFields | ForwardedMessage
+
+union GetAlbumsByUserIdResponse = Albums | BaseError
+
+union GetCodeResponse = ErrorWithFields | StringObject
+
+union GetComplaintFinalTypeOrEWF = ComplaintFinalType | ErrorWithFields
+
+union GetComplaintsOrBE = BaseError | ComplaintsList
+
+union GetHintsListOrBE = BaseError | HintsList
+
+union GetHistoryListOrBE = BaseError | HistoryList
+
+union GetMeResponse = BaseError | User
+
+union GetRecentBlogsListOrBE = BaseError | RecentBlogsList
+
+union GetRecentStoriesOrBE = BaseError | StoryFeedList
+
+union GetUserStoriesOrBE = BaseError | StoryFeed
+
+type HintsList {
+  hints: [String!]!
+}
+
+type HistoryList {
+  history: [String!]!
+}
+
+interface IBaseComment {
+  author: User!
+  createdAt: String!
+  hasBeenRead: Boolean!
+  id: ID!
+  target: CommentTarget!
+  updatedAt: String!
+}
+
+union LastMessage = AppointmentMessage | ForwardedMessage | OrderMessage | RegularMessage
+
+type LastReadTimestampChanged {
+  chatId: ID!
+  lastReadTimestamp: String!
+  userId: ID!
+}
+
+union LastReadTimestampChangedOrBE = BaseError | LastReadTimestampChanged
+
+enum LikeContentType {
+  ARTICLE
+  COMMENT
+  PRODUCT
+  PUBLICATION
+  STORY
+  USER
+}
+
+input LikeIn {
+  contentId: ID!
+  contentType: LikeContentType!
+}
+
+type ListHashtags {
+  hashtags: [String!]!
+}
+
+union ListHashtagsOrBE = BaseError | ListHashtags
+
+interface Message {
+  author: User!
+  chat: Chat!
+  createdAt: String!
+  id: ID!
+  isEdited: Boolean!
+  references: [RecordType!]!
+  text: String!
+  updatedAt: String!
+}
+
+type MessageList {
+  items: [Message!]!
+  total: Int!
+}
+
+union MessageListOrEWF = ErrorWithFields | MessageList
+
+union MessageOrEWF = AppointmentMessage | ErrorWithFields | ForwardedMessage | OrderMessage | RegularMessage
+
+union MessageUnion = AppointmentMessage | ForwardedMessage | OrderMessage | RegularMessage
+
+type Mutation {
+  addContentViews(content: AddContentViewsIn!): ErrorWithFields
+  addItemToCart(item: CartItemIn!): ErrorWithFields
+  addRecentBlog(blogId: ID!): BaseError
+  blockUser(id: ID!): BaseError
+  confirmCode(code: String!, target: String!, transport: CodeTransport!): ErrorWithFields
+  createAlbum(album: AlbumIn!): CreateAlbumResponse!
+  createAppointmentMessage(chatId: ID!, message: AppointmentMessageIn!): AppointmentMessageOrEWF!
+  createArticle(article: ArticleIn!): ArticleOrEWF!
+  createBlog(blog: BlogIn!): BlogOrEWF!
+  createCatalog: BaseError
+  createChat(userId: ID!): ChatOrBE!
+  createCollection(collection: CollectionIn!): CollectionOrEWF!
+  createComment(comment: CommentIn!): ExistingCommentOrEWF!
+  createComplaint(complaint: ComplaintIn!): CreateComplaintOrEWF!
+  createForwardMessage(chatId: ID!, message: ForwardMessageIn!): ForwardedMessageOrEWF!
+  createOrderMessage(chatId: ID!, message: OrderMessageIn!): OrderMessageOrEWF!
+  createProduct(product: ProductIn!): ProductOrEWF!
+  createPublication(publication: PublicationIn!): PublicationOrEWF!
+  createRegularMessage(chatId: ID!, message: RegularMessageIn!): RegularMessageOrEWF!
+  createReview(review: ReviewIn!): ReviewOrEWF!
+  createStory(story: StoryIn!): CreateStoryOrEWF!
+  createTechSupportChat: ChatOrBE!
+  createTopic(topic: TopicIn!): TopicOrEWF!
+  createUser(user: UserIn!): UserOrEWF!
+  deleteAlbum(id: ID!): BaseError
+  deleteAllArticles: Void
+  deleteAllPublications: Void
+  deleteArticle(id: ID!): BaseError
+  deleteChat(id: ID!): BaseError
+  deleteCollection(id: ID!): BaseError
+  deleteComment(id: ID!): BaseError
+  deleteComplaint(id: ID!): BaseError
+  deleteFriend(id: ID!): BaseError
+  deleteItemFromCart(id: ID!): BaseError
+  deleteManyUsers(ids: [ID!]!): BaseError
+  deleteMessage(chatId: ID!, id: ID!): BaseError
+  deleteProduct(id: ID!): BaseError
+  deletePublication(id: ID!): BaseError
+  deleteStory(id: ID!): BaseError
+  deleteTopic(id: ID!): BaseError
+  deleteUser(id: ID!): BaseError
+  followUser(id: ID!): BaseError
+  muteChat(id: ID!): BaseError
+  resetPassword(newPassword: String!, target: String!, transport: CodeTransport!): ErrorWithFields
+  sendCode(target: String!, transport: CodeTransport!): ErrorWithFields
+  sendContactsToPartnership(contacts: ContactsIn!): ErrorWithFields
+  sendContactsToTechSupport(contacts: ContactsIn!): ErrorWithFields
+  serverCleanup: BaseError
+  setAdminRole(userId: ID!): BaseError
+  setAlbumsCover(id: ID): BaseError
+  setDecisionOfComplaint(complaint: SetComplaintDecisionIn!): SetComplaintDecisionOrEWF!
+  setEmail(email: String!, id: ID!, transport: CodeTransport!): ErrorWithFields
+  setFavourite(favourite: FavouriteIn!, isFavourite: Boolean! = true): ErrorWithFields
+  setFriend(id: ID!): BaseError
+  setHashtags(hashtags: [String!]!): BaseError
+  setLastReadTimestamp(chatId: ID!, lastReadTimestamp: String!): BaseError
+  setLike(like: LikeIn!): ErrorWithFields
+  setPhone(id: ID!, phone: String!, transport: CodeTransport!): ErrorWithFields
+  setReactionToComment(id: ID!, reaction: CommentReactionType): BaseError
+  setSettings(settings: NotificationSettingsIn!): BaseError
+  subscribe(id: ID!): BaseError
+  unblockUser(id: ID!): BaseError
+  unfollowUser(id: ID!): BaseError
+  unmuteChat(id: ID!): BaseError
+  unsetLike(like: LikeIn!): ErrorWithFields
+  unsubscribe(id: ID!): BaseError
+  updateAlbum(album: AlbumInUpdate!, id: ID!): UpdateAlbumResponse!
+  updateAlbumContent(content: AlbumContentInUpdate!, id: ID!): ErrorWithFields
+  updateArticle(article: ArticleInUpdate!, id: ID!): ArticleOrEWF!
+  updateBlog(blog: BlogInUpdate!): BlogOrEWF!
+  updateCatalog(catalog: CatalogInUpdate!): ErrorWithFields
+  updateCollection(collection: CollectionInUpdate!, id: ID!): ErrorWithFields
+  updateLastReadComment(content: CommentContentIn!, timestamp: String!): BaseError
+  updateLastReadTimestamp(lastReadTimestamp: String!): BaseError
+  updatePassword(id: ID!, password: PasswordInUpdate!): ErrorWithFields
+  updateProduct(id: ID!, product: ProductInUpdate!): ErrorWithFields
+  updatePublication(id: ID!, publication: PublicationInUpdate!): ErrorWithFields
+  updateTariff(tariff: TariffIn!): TariffOrEWF!
+  updateTopic(id: ID!, topic: TopicInUpdate!): TopicOrEWF!
+  updateUser(id: ID!, user: UserInUpdate!): ErrorWithFields
+  uploadFile(file: Upload!): UploadFileResponse!
+  uploadImage(file: Upload!): UploadFileResponse!
+  uploadVideo(file: Upload!): UploadFileResponse!
+}
+
+type Notification {
+  author: User
+  createdAt: String!
+  id: ID!
+  notificationType: NotificationType!
+  readedAt: String
+  target: NotificationTarget!
+  text: String!
+  updatedAt: String!
+}
+
+type NotificationList {
+  notifications: [Notification!]!
+}
+
+union NotificationListOrBE = BaseError | NotificationList
+
+type NotificationSettings {
+  sendNotificationsToEmail: Boolean!
+  sendPushNotifications: Boolean!
+}
+
+input NotificationSettingsIn {
+  sendNotificationsToEmail: Boolean!
+  sendPushNotifications: Boolean!
+}
+
+union NotificationSettingsOrBE = BaseError | NotificationSettings
+
+type NotificationTarget {
+  id: ID!
+  image: File
+  type: NotificationTargetType!
+}
+
+enum NotificationTargetType {
+  CHAT
+  COMMENT
+  PRODUCT
+  PUBLICATION
+  STORY
+  USER
+}
+
+enum NotificationType {
+  CONTENT_IS_BLOCKED
+  NEW_COMMENT
+  NEW_FOLLOWER
+  NEW_LIKE
+  NEW_MENTION
+  NEW_MESSAGE
+}
+
+type OnlineStatusChanged {
+  chatId: ID!
+  isOnline: Boolean!
+  userId: ID!
+}
+
+union OnlineStatusChangedOrBE = BaseError | OnlineStatusChanged
+
+type OrderContent {
+  data: Product
+  metadata: ContentMetadata!
+}
+
+type OrderMessage implements Message {
+  author: User!
+  chat: Chat!
+  createdAt: String!
+  id: ID!
+  isEdited: Boolean!
+  orderProperties: [RecordType!]!
+  product: OrderContent!
+  references: [RecordType!]!
+  text: String!
+  updatedAt: String!
+}
+
+input OrderMessageIn {
+  orderProperties: [RecordTypeIn!]!
+  productId: ID!
+  text: String!
+}
+
+union OrderMessageOrEWF = ErrorWithFields | OrderMessage
+
+input PasswordInUpdate {
+  newPassword: String!
+  oldPassword: String!
+}
+
+type Product {
+  attachments: [File!]!
+  author: User!
+  collection: Collection!
+  createdAt: String!
+  deliveryTerms: String
+  description: String
+  id: ID!
+  is18Plus: Boolean!
+  isBlocked: Boolean!
+  isFavourite: Boolean!
+  isInCart: Boolean!
+  isLiked: Boolean!
+  isService: Boolean!
+  likesCount: Int!
+  linkId: ID
+  name: String!
+  oldPrice: Int
+  price: Int!
+  properties: [ProductProperty!]!
+  relatedProducts: [Product!]!
+  reviewsCount: Int!
+  tags: [String!]!
+  updatedAt: String!
+  viewsCount: Int!
+}
+
+input ProductIn {
+  attachments: [ID!]!
+  collectionId: ID!
+  deliveryTerms: String = null
+  description: String = null
+  is18Plus: Boolean! = false
+  isService: Boolean! = false
+  link: String = null
+  name: String!
+  oldPrice: Int = null
+  price: Int!
+  properties: [ProductPropertyIn!]!
+  relatedProducts: [ID!] = null
+  tags: [String!]!
+}
+
+input ProductInUpdate {
+  deliveryTerms: String
+  description: String
+  is18Plus: Boolean = null
+  link: String
+  name: String = null
+  oldPrice: Int
+  price: Int = null
+  properties: [ProductPropertyIn!]
+  relatedProducts: [ID!]
+  tags: [String!]
+}
+
+type ProductList {
+  products: [Product!]!
+  total: Int!
+}
+
+union ProductListOrBE = BaseError | ProductList
+
+union ProductOrBE = BaseError | Product
+
+union ProductOrEWF = ErrorWithFields | Product
+
+type ProductProperty {
+  property: String!
+  values: [String!]!
+}
+
+input ProductPropertyIn {
+  property: String!
+  values: [String!]!
+}
+
+type Publication {
+  attachments: [File!]!
+  author: User!
+  commentsCount: Int!
+  createdAt: String!
+  description: String
+  id: ID!
+  is18Plus: Boolean!
+  isBlocked: Boolean!
+  isCommentable: Boolean!
+  isFavourite: Boolean!
+  isLiked: Boolean!
+  likesCount: Int!
+  name: String
+  references: [RecordType!]!
+  showInFeed: Boolean!
+  tags: [String!]!
+  unreadCommentsCount: Int!
+  updatedAt: String!
+  viewsCount: Int!
+}
+
+input PublicationIn {
+  attachments: [ID!]!
+  description: String = null
+  is18Plus: Boolean! = false
+  isCommentable: Boolean! = true
+  name: String = null
+  showInFeed: Boolean! = true
+  tags: [String!] = null
+}
+
+input PublicationInUpdate {
+  description: String
+  is18Plus: Boolean
+  isCommentable: Boolean
+  name: String
+  showInFeed: Boolean
+  tags: [String!]
+}
+
+type PublicationList {
+  publications: [Publication!]!
+  total: Int!
+}
+
+union PublicationListOrBE = BaseError | PublicationList
+
+union PublicationListOrEWF = ErrorWithFields | PublicationList
+
+union PublicationOrBE = BaseError | Publication
+
+union PublicationOrEWF = ErrorWithFields | Publication
+
+type Query {
+  createTokens(login: String!, password: String!): CreateTokensResponse!
+  deleteRefreshToken(refreshToken: String!): BaseError
+  getActiveNotifications(userId: ID = null): NotificationListOrBE!
+  getActiveTariff: TariffOrBE!
+  getAlbumsByUserId(id: ID!): GetAlbumsByUserIdResponse!
+  getArticleRecommendations(limit: Int! = 20, sessionId: ID!): ArticleListOrBE!
+  getArticleSubscriptions(limit: Int! = 20, skip: Int! = 0): ArticleListOrBE!
+  getBlockedUsers(limit: Int! = 20, query: String = null, skip: Int! = 0): UserListOrEWF!
+  getCartItems: CartItemsOrBE!
+  getCatalogProducts(id: ID!, limit: Int! = 20, skip: Int! = 0): ProductListOrBE!
+  getChatByUserId(userId: ID!): ChatOrBE!
+  getChats(limit: Int! = 20, skip: Int! = 0): ChatListOrBE!
+  getChatsWithOrder(limit: Int! = 20, skip: Int! = 0): ChatListOrBE!
+  getCode(target: String!, transport: CodeTransport!): GetCodeResponse
+  getCommentReplies(id: ID!, limit: Int! = 20, skip: Int! = 0): CommentListOrEWF!
+  getCommentsWithTopComment(id: ID!, limit: Int! = 20, skip: Int! = 0, sorting: SortingType! = BY_CREATED_AT): CommentWithRepliesOrEWF!
+  getComplaints(limit: Int! = 10, skip: Int! = 0): GetComplaintsOrBE!
+  getContentComments(content: CommentContentIn!, limit: Int! = 20, skip: Int! = 0, sorting: SortingType! = BY_CREATED_AT): CommentWithRepliesListOrEWF!
+  getFavouriteArticles(limit: Int! = 20, skip: Int! = 0): ArticleListOrBE!
+  getFavouriteProducts(limit: Int! = 20, skip: Int! = 0): ProductListOrBE!
+  getFavouritePublications(limit: Int! = 20, skip: Int! = 0): PublicationListOrBE!
+  getFinalTypeByContentId(metadata: ComplaintMetadataIn!): GetComplaintFinalTypeOrEWF!
+  getHashtags: ListHashtagsOrBE!
+  getMe: GetMeResponse!
+  getMessages(chatId: ID!, lastReadTimestamp: String = null, limit: Int! = 20, skip: Int! = 0): MessageListOrEWF!
+  getMyPublications(isVideo: Boolean = null, limit: Int! = 20, skip: Int! = 0): PublicationListOrEWF!
+  getMyTopics: TopicListOrBE!
+  getNotifications(userId: ID = null): NotificationListOrBE!
+  getPopularTags(limit: Int! = 20, skip: Int! = 0): TagListOrEWF!
+  getProductsByCollectionId(id: ID!, limit: Int! = 20, skip: Int! = 0): ProductListOrBE!
+  getPublicationByCommentId(id: ID!): PublicationOrBE!
+  getPublicationRecommendations(limit: Int! = 20, sessionId: ID!): PublicationListOrBE!
+  getPublicationSubscriptions(limit: Int! = 20, skip: Int! = 0): PublicationListOrBE!
+  getPublicationsByTag(limit: Int! = 20, skip: Int! = 0, tag: String!): PublicationListOrEWF!
+  getPublicationsByUserId(id: ID!, limit: Int! = 20, onlyVideo: Boolean! = false, skip: Int! = 0): PublicationListOrEWF!
+  getReactionAuthors(commentId: ID!, limit: Int! = 20, reactionType: CommentReactionType!, skip: Int! = 0): UserListOrEWF!
+  getRecentBlogs: GetRecentBlogsListOrBE!
+  getRecentStories: GetRecentStoriesOrBE!
+  getRecommendedUsers(limit: Int! = 20, sessionId: ID!): UserListOrBE!
+  getReviewsByProductId(id: ID!, limit: Int! = 20, skip: Int! = 0): ReviewListOrEWF!
+  getSettings: NotificationSettingsOrBE!
+  getTechSupportChat: ChatOrBE!
+  getTechSupportChats(limit: Int! = 20, skip: Int! = 0): ChatListOrBE!
+  getUserStories(userId: ID!): GetUserStoriesOrBE!
+  getUsers(limit: Int! = 20, skip: Int! = 0): UserListOrBE!
+  hints(limit: Int! = 5, q: String!): GetHintsListOrBE!
+  history: GetHistoryListOrBE!
+  isEmailExist(email: String!): BooleanObjectOrBE!
+  isLoginExist(login: String!): BooleanObjectOrBE!
+  isPhoneExist(phone: String!): BooleanObjectOrBE!
+  listFollowers(id: ID!, limit: Int! = 20, skip: Int! = 0): UserListOrBE!
+  listSubscriptions(id: ID!, limit: Int! = 20, skip: Int! = 0): UserListOrBE!
+  refreshAccessToken(refreshToken: String!): RefreshAccessTokenResponse!
+  retrieveAlbum(id: ID!): RetrieveAlbumResponse!
+  retrieveArticle(id: ID!): ArticleOrBE!
+  retrieveBlog(id: ID!, topicId: ID = null): BlogOrEWF!
+  retrieveCatalog(id: ID!): CatalogOrBE!
+  retrieveCollection(id: ID!): CollectionOrBE!
+  retrieveComplaint(id: ID!): RetrieveComplaintOrBE!
+  retrieveFile(id: ID!): RetrieveFileResponse!
+  retrieveMessage(chatId: ID!, id: ID!): MessageOrEWF!
+  retrieveProduct(id: ID!): ProductOrBE!
+  retrievePublication(id: ID!): PublicationOrBE!
+  retrieveStory(id: ID!): RetrieveStoryOrBE!
+  retrieveUser(id: ID!): UserOrBE!
+  searchBlogs(search: SearchBlogsIn!): SearchBlogsListOrEWF!
+  searchFollowers(id: ID!, limit: Int! = 20, q: String!, skip: Int! = 0): UserListOrEWF!
+  searchProducts(search: SearchIn!): SearchProductsListOrEWF!
+  searchPublications(search: SearchIn!): SearchPublicationsListOrEWF!
+  searchSubscriptions(id: ID!, limit: Int! = 20, q: String!, skip: Int! = 0): UserListOrEWF!
+  searchUsers(search: SearchIn!): SearchUsersListOrEWF!
+}
+
+type Reaction {
+  count: Int!
+  type: CommentReactionType!
+}
+
+type RecentBlog {
+  author: User!
+  avatar: File
+  id: ID!
+  name: String!
+  unreadCount: Int!
+}
+
+type RecentBlogsList {
+  records: [RecentBlog!]!
+  total: Int!
+}
+
+type RecordType {
+  key: String!
+  value: String!
+}
+
+input RecordTypeIn {
+  key: String!
+  value: String!
+}
+
+union RefreshAccessTokenResponse = AccessToken | BaseError
+
+type RegularMessage implements Message {
+  attachments: [File!]!
+  author: User!
+  chat: Chat!
+  createdAt: String!
+  id: ID!
+  isEdited: Boolean!
+  references: [RecordType!]!
+  text: String!
+  updatedAt: String!
+}
+
+input RegularMessageIn {
+  attachments: [ID!]!
+  tempKey: ID!
+  text: String!
+}
+
+union RegularMessageOrEWF = ErrorWithFields | RegularMessage
+
+union RetrieveAlbumResponse = Album | BaseError
+
+union RetrieveComplaintOrBE = BaseError | Complaint
+
+union RetrieveFileResponse = BaseError | File
+
+union RetrieveStoryOrBE = BaseError | Story
+
+type Review {
+  author: User!
+  createdAt: String!
+  id: ID!
+  text: String!
+  updatedAt: String!
+}
+
+input ReviewIn {
+  id: ID!
+  text: String!
+}
+
+type ReviewList {
+  reviews: [Review!]!
+  total: Int!
+}
+
+union ReviewListOrEWF = ErrorWithFields | ReviewList
+
+union ReviewOrEWF = ErrorWithFields | Review
+
+input SearchBlogsIn {
+  inMySubscriptions: Boolean! = false
+  limit: Int!
+  q: String!
+  skip: Int!
+}
+
+type SearchBlogsList {
+  records: [Blog!]!
+  total: Int!
+}
+
+union SearchBlogsListOrEWF = ErrorWithFields | SearchBlogsList
+
+input SearchIn {
+  city: String = null
+  hasDelivery: Boolean = null
+  lat: Int = null
+  limit: Int!
+  lng: Int = null
+  openedAtTime: String = null
+  q: String!
+  radius: Int = null
+  show18Plus: Boolean = null
+  skip: Int!
+}
+
+type SearchProductsList {
+  records: [Product!]!
+  total: Int!
+}
+
+union SearchProductsListOrEWF = ErrorWithFields | SearchProductsList
+
+type SearchPublicationsList {
+  records: [Publication!]!
+  total: Int!
+}
+
+union SearchPublicationsListOrEWF = ErrorWithFields | SearchPublicationsList
+
+type SearchUserRecord {
+  content: [Publication!]!
+  user: User!
+}
+
+type SearchUsersList {
+  records: [SearchUserRecord!]!
+  total: Int!
+}
+
+union SearchUsersListOrEWF = ErrorWithFields | SearchUsersList
+
+input SetComplaintDecisionIn {
+  complaintFinalType: ComplaintType!
+  decision: ComplaintDecision!
+  id: ID!
+}
+
+union SetComplaintDecisionOrEWF = Complaint | ErrorWithFields
+
+type SocketMessage {
+  data: MessageUnion!
+  tempKey: ID!
+}
+
+union SocketMessageOrBE = BaseError | SocketMessage
+
+enum SortingType {
+  BY_CREATED_AT
+  BY_POPULAR
+}
+
+type Story {
+  createdAt: String!
+  file: File!
+  id: ID!
+  isLiked: Boolean!
+  objects: [StoryObject!]!
+  policy: VisibilityPolicy!
+  updatedAt: String!
+  user: User!
+}
+
+type StoryFeed {
+  author: User!
+  stories: [Story!]!
+}
+
+type StoryFeedList {
+  items: [StoryFeed!]!
+  total: Int!
+}
+
+type StoryGeolocation {
+  coordinate: StoryGeolocationCoordinate!
+  position: StoryObjectPosition!
+}
+
+type StoryGeolocationCoordinate {
+  lat: Float!
+  lng: Float!
+}
+
+input StoryGeolocationCoordinateIn {
+  lat: Float!
+  lng: Float!
+}
+
+input StoryGeolocationIn {
+  coordinate: StoryGeolocationCoordinateIn!
+  position: StoryObjectPositionIn!
+}
+
+input StoryIn {
+  attachmentId: ID!
+  objects: [StoryObjectIn!]!
+  policy: VisibilityPolicy!
+}
+
+type StoryLink {
+  isAccountLinkMatched: Boolean!
+  link: String!
+  linkName: String!
+  position: StoryObjectPosition!
+  textColor: StoryTextColors!
+}
+
+input StoryLinkIn {
+  isAccountLinkMatched: Boolean!
+  link: String!
+  linkName: String!
+  position: StoryObjectPositionIn!
+  textColor: StoryTextColors!
+}
+
+union StoryObject = StoryGeolocation | StoryLink | StoryProductLink | StoryText | StoryUserReference
+
+input StoryObjectIn {
+  geolocation: StoryGeolocationIn = null
+  link: StoryLinkIn = null
+  productLink: StoryProductLinkIn = null
+  text: StoryTextIn = null
+  userReference: StoryUserReferenceIn = null
+}
+
+type StoryObjectPosition {
+  angle: Float!
+  scale: Float!
+  x: Float!
+  y: Float!
+}
+
+input StoryObjectPositionIn {
+  angle: Float!
+  scale: Float!
+  x: Float!
+  y: Float!
+}
+
+type StoryProductLink {
+  catalogId: ID!
+  collectionName: String!
+  position: StoryObjectPosition!
+  price: Int!
+  productId: ID!
+  productName: String!
+  textColor: StoryTextColors!
+}
+
+input StoryProductLinkIn {
+  position: StoryObjectPositionIn!
+  productId: ID!
+  textColor: StoryTextColors!
+}
+
+type StoryText {
+  font: String!
+  fontSize: String!
+  position: StoryObjectPosition!
+  textColor: StoryTextColors!
+  value: String!
+}
+
+enum StoryTextColors {
+  BLACK
+  GRAY
+  RED
+  WHITE
+}
+
+input StoryTextIn {
+  font: String!
+  fontSize: String!
+  position: StoryObjectPositionIn!
+  textColor: StoryTextColors!
+  value: String!
+}
+
+type StoryUserReference {
+  login: String
+  name: String
+  position: StoryObjectPosition!
+  textColor: StoryTextColors!
+  userId: ID!
+}
+
+input StoryUserReferenceIn {
+  position: StoryObjectPositionIn!
+  textColor: StoryTextColors!
+  userId: ID!
+}
+
+type StringObject {
+  string: String!
+}
+
+type Subscription {
+  onLastReadTimestampChanged: LastReadTimestampChangedOrBE!
+  onNewMessage: SocketMessageOrBE!
+  onOnlineStatusChanged: OnlineStatusChangedOrBE!
+}
+
+type TagList {
+  tags: [String!]!
+  total: Int!
+}
+
+union TagListOrEWF = ErrorWithFields | TagList
+
+type Tariff {
+  addressesCount: Int!
+  createdAt: String!
+  expiredAt: String!
+  hashtagsCount: Int!
+  id: ID!
+  mailingRecipients: Int!
+  mailingToAll: Boolean!
+  productsCount: Int!
+  updatedAt: String!
+  userId: ID!
+  videoLengthS: Int!
+}
+
+input TariffIn {
+  addressesCount: Int!
+  hashtagsCount: Int!
+  mailingRecipients: Int!
+  mailingToAll: Boolean!
+  productsCount: Int!
+  videoLengthS: Int!
+}
+
+union TariffOrBE = BaseError | Tariff
+
+union TariffOrEWF = ErrorWithFields | Tariff
+
+type TokenPair {
+  accessToken: String!
+  refreshToken: String!
+}
+
+type Topic {
+  blog: Blog!
+  cover: File!
+  id: ID!
+  name: String!
+}
+
+input TopicIn {
+  coverId: ID!
+  name: String!
+}
+
+input TopicInUpdate {
+  coverId: ID
+  name: String
+}
+
+type TopicList {
+  topics: [Topic!]!
+}
+
+union TopicListOrBE = BaseError | TopicList
+
+union TopicOrEWF = ErrorWithFields | Topic
+
+union UpdateAlbumResponse = Album | ErrorWithFields
+
+scalar Upload
+
+union UploadFileResponse = BaseError | File
+
+type User {
+  additionalInfo: AdditionalInfo
+  address: AddressOut
+  avatar: File
+  createdAt: String!
+  dateOfBirth: String
+  description: String
+  email: String
+  id: ID!
+  isBlocked: Boolean!
+  isFollowing: Boolean!
+  isFriend: Boolean!
+  isLiked: Boolean!
+  likesCount: Int!
+  login: String!
+  name: String!
+  phone: String!
+  sex: UserSex
+  shortDescription: String
+  subscribersCount: Int!
+  subscriptionsCount: Int!
+  updatedAt: String!
+  viewsCount: Int!
+  website: String
+  workingHours: WeekWorkingHours
+}
+
+input UserIn {
+  address: AddressIn!
+  dateOfBirth: String!
+  email: String
+  login: String!
+  name: String!
+  password: String!
+  phone: String!
+  sex: UserSex!
+  shortDescription: String
+}
+
+input UserInUpdate {
+  additionalInfo: AdditionalInfoIn
+  address: AddressIn
+  avatarId: String
+  dateOfBirth: String
+  description: String
+  isBlocked: Boolean = null
+  isPaided: Boolean = null
+  name: String = null
+  sex: UserSex
+  shortDescription: String
+  website: String
+  workingHours: WeekWorkingHoursIn
+}
+
+type UserList {
+  total: Int!
+  users: [User!]!
+}
+
+union UserListOrBE = BaseError | UserList
+
+union UserListOrEWF = ErrorWithFields | UserList
+
+union UserOrBE = BaseError | User
+
+union UserOrEWF = ErrorWithFields | User
+
+enum UserSex {
+  FEMALE
+  MALE
+}
+
+enum ViewsContentType {
+  ARTICLE
+  COMMENT
+}
+
+enum VisibilityPolicy {
+  VISIBLE_ONLY_TO_FOLLOWERS
+  VISIBLE_TO_EVERYONE
+}
+
+"""Represents NULL values"""
+scalar Void
+
+type WeekWorkingHours {
+  friday: DayWorkingHours!
+  monday: DayWorkingHours!
+  saturday: DayWorkingHours!
+  sunday: DayWorkingHours!
+  thursday: DayWorkingHours!
+  tuesday: DayWorkingHours!
+  wednesday: DayWorkingHours!
+}
+
+input WeekWorkingHoursIn {
+  friday: DayWorkingHoursIn!
+  monday: DayWorkingHoursIn!
+  saturday: DayWorkingHoursIn!
+  sunday: DayWorkingHoursIn!
+  thursday: DayWorkingHoursIn!
+  tuesday: DayWorkingHoursIn!
+  wednesday: DayWorkingHoursIn!
+}
+
+enum WorkingDayStatus {
+  DAY_OFF
+  WORKING
+}
+
+type WorkingHours {
+  closesAt: String!
+  opensAt: String!
+}
+
+input WorkingHoursIn {
+  closesAt: String!
+  opensAt: String!
+}

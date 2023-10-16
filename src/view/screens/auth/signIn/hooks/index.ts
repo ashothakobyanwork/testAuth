@@ -6,11 +6,12 @@ import * as yup from 'yup';
 import {formErrors} from '~/constants/form';
 import {PhoneNumberUtil} from 'google-libphonenumber';
 import {useNavigation} from '@react-navigation/native';
-import {RootStackRouts} from '~/view/navigation/appNavigator/types';
-import {TabsStackRouts} from '~/view/navigation/tabBar/types';
+import {useCreateTokensLazyQuery} from '~/apollo/graphql/queries/signIn.generated';
+import {logger} from '~/utils/logger';
+import {processGqlErrorResponse} from '~/utils/processGqlErrorResponse';
 
 interface UseSignInFormValues {
-  phoneOrLogin: string;
+  login: string;
   password: string;
 }
 interface UseSignInPhoneReturnType {
@@ -20,13 +21,13 @@ interface UseSignInPhoneReturnType {
 }
 
 const defaultValues: UseSignInFormValues = {
-  phoneOrLogin: '',
+  login: '',
   password: '',
 };
 const phoneNumberUtil = PhoneNumberUtil.getInstance();
 
 const validation = yup.object({
-  phoneOrLogin: yup
+  login: yup
     .string()
     .required(formErrors.REQUIRED)
     .test('invalidPhoneNumber', formErrors.INVALID_PHONE_NUMBER, value => {
@@ -53,20 +54,40 @@ export function useSignInForm(): UseSignInPhoneReturnType {
     resolver: yupResolver(validation),
   });
   const navigation = useNavigation();
+  const [signIn, {loading}] = useCreateTokensLazyQuery({
+    fetchPolicy: 'network-only',
+  });
 
   const handleSubmit = useCallback(
     async (values: UseSignInFormValues) => {
-      navigation.navigate(RootStackRouts.Tabs, {screen: TabsStackRouts.Home});
+      try {
+        const {data} = await signIn({
+          variables: values,
+        });
+        if (data?.createTokens.__typename === 'ErrorWithFields') {
+          processGqlErrorResponse<UseSignInFormValues>({
+            fields: ['login', 'password'],
+            errorFields: data.createTokens.fields,
+            error: data.createTokens.status,
+            setFieldError: (name, message) => form.setError(name, {message}),
+          });
+        } else if (data?.createTokens.__typename === 'TokenPair') {
+          const response = data?.createTokens;
+        }
+      } catch (e) {
+        logger.warn(e);
+      }
+      // navigation.navigate(RootStackRouts.Tabs, {screen: TabsStackRouts.Home});
     },
-    [navigation],
+    [form, signIn],
   );
 
   return useMemo(
     () => ({
-      isLoading: false,
+      isLoading: loading,
       form,
       handleSubmit: form.handleSubmit(handleSubmit),
     }),
-    [form, handleSubmit],
+    [form, handleSubmit, loading],
   );
 }

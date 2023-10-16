@@ -14,7 +14,7 @@ import {useSignInForm} from './hooks';
 import {theme} from '~/view/styles/theme';
 
 const SignIn = () => {
-  const {form, handleSubmit} = useSignInForm();
+  const {form, isLoading, handleSubmit} = useSignInForm();
   const [isPasswordViewed, setIsPasswordViewed] = useState<boolean>(false);
   return (
     <MainContainer withPadding>
@@ -29,7 +29,7 @@ const SignIn = () => {
         <AppText style={styles.loginText}>Войти</AppText>
         <TextField
           control={form.control}
-          name="phoneOrLogin"
+          name="login"
           placeholder="Логин или телефон"
         />
         <TextField
@@ -56,6 +56,7 @@ const SignIn = () => {
           }
         />
         <Button
+          isLoading={isLoading}
           containerStyle={styles.button}
           label="Войти"
           onPress={handleSubmit}

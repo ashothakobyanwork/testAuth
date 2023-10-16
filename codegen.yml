@@ -1,5 +1,5 @@
 schema: 'https://api.quickclick.online/content/graphql'
-documents: './src/apollo/graphql/**/*.gql'
+documents: './src/apollo/graphql/**/*.graphql'
 generates:
   ./src/apollo/__generated__/resolvers-types.ts:
     plugins:
@@ -7,3 +7,22 @@ generates:
       - 'typescript-resolvers'
     config:
       useIndexSignature: true
+  src/:
+    preset: 'near-operation-file'
+    presetConfig:
+      extension: '.generated.tsx'
+      baseTypesPath: 'apollo/generated/types.ts'
+    plugins:
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      withHooks: true
+  src/apollo/__generated__/graphql.schema.graphql:
+    plugins:
+      - 'schema-ast'
+  src/apollo/__generated__/graphql.schema.json:
+    plugins:
+      - 'introspection'
+  src/apollo/__generated__/apollo-helpers.ts:
+    plugins:
+      - 'typescript-apollo-client-helpers'

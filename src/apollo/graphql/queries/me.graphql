@@ -1,0 +1,21 @@
+query GetMe {
+  getMe {
+    ... on User {
+      id
+      name
+      email
+      phone
+      address {
+        city
+        coordinates {
+          address
+          lat
+          lng
+        }
+      }
+    }
+    ... on BaseError {
+      status
+    }
+  }
+}
