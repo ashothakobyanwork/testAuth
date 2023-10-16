@@ -1,6 +1,6 @@
 import {ImageStyle, TextStyle, ViewStyle} from 'react-native';
 
-export type TextVariant = 'h1';
+export type TextVariant = 'h1' | 'p1' | 'p2';
 
 export interface TextThemeProps {
   fontFamily: string;
@@ -25,6 +25,7 @@ export interface Theme {
     gray: Record<number, string>;
     blue: string;
     orange: string;
+    errorBackground: string;
   };
   fontFamily: FontFamily;
   text: Record<TextVariant, TextThemeProps>;

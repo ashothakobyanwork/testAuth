@@ -10,8 +10,9 @@ const colors: Theme['colors'] = {
   black: '#000000',
   blue: '#0077FF',
   primary: '#FF00B8',
-  gray: {1: 'rgba(60, 60, 67, 0.3)', 0: 'rgba(242, 242, 247, 1)'},
+  gray: {1: '#F2F2F7', 0: '#BBBBC1'},
   orange: '#FB3F1C',
+  errorBackground: '#FDF5F5',
 };
 
 export enum FontFamily {
@@ -35,6 +36,16 @@ export const theme: Theme = {
     h1: {
       fontFamily: FontFamily.REGULAR,
       fontSize: getResponsiveValue(20),
+      lineHeight: getResponsiveValue(24),
+    },
+    p1: {
+      fontFamily: FontFamily.REGULAR,
+      fontSize: getResponsiveValue(16),
+      lineHeight: getResponsiveValue(24),
+    },
+    p2: {
+      fontFamily: FontFamily.REGULAR,
+      fontSize: getResponsiveValue(14),
       lineHeight: getResponsiveValue(24),
     },
   },

@@ -20,7 +20,7 @@ const MainContainer: FC<MainContainerProps> = ({
       style={[
         styles.main,
         {backgroundColor},
-        withPadding && {paddingHorizontal: getResponsiveWidth(15)},
+        withPadding && {paddingHorizontal: getResponsiveWidth(16)},
       ]}>
       <StatusBar
         animated
