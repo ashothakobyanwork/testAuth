@@ -8,4 +8,5 @@ export type Props = {
   isLoading?: boolean;
   fullWidth?: boolean;
   icon?: IconName;
+  withShadow?: boolean;
 } & Omit<PressableProps, 'title' | 'style'>;

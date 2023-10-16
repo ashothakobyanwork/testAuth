@@ -33,6 +33,13 @@ const styles = StyleSheet.create({
   loader: {
     position: 'absolute',
   },
+  shadow: {
+    shadowColor: theme.colors.black,
+    shadowOffset: {width: 2, height: 3},
+    shadowOpacity: 0.25,
+    shadowRadius: 3,
+    elevation: 2,
+  },
 });
 
 export default styles;

@@ -69,11 +69,13 @@ const SignIn = () => {
           icon="VK"
           containerStyle={styles.vkButton}
           label="Войти через Вконтакте"
+          withShadow
         />
         <Button
           icon="yandex"
           containerStyle={styles.yandexButton}
           label="Войти через Яндекс"
+          withShadow
         />
       </View>
       <AppText style={styles.signUpText}>Регистрация</AppText>

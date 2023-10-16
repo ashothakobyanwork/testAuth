@@ -1,0 +1,7 @@
+query createTokens($login: String!, $password: String!) {
+  createTokens(login: $login, password: $password) {
+    TokenPair {
+      accessToken
+    }
+  }
+}

@@ -31,7 +31,6 @@ const TextField = <
   ...textInputProps
 }: Props<TFormValues, TName>): React.ReactElement => {
   const controller = useController({name, control});
-  console.log(controller.fieldState.error, 'controller.fieldState.error');
 
   return (
     <Field

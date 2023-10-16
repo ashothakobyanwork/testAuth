@@ -6,6 +6,8 @@ import * as yup from 'yup';
 import {formErrors} from '~/constants/form';
 import {PhoneNumberUtil} from 'google-libphonenumber';
 import {useNavigation} from '@react-navigation/native';
+import {RootStackRouts} from '~/view/navigation/appNavigator/types';
+import {TabsStackRouts} from '~/view/navigation/tabBar/types';
 
 interface UseSignInFormValues {
   phoneOrLogin: string;
@@ -52,9 +54,12 @@ export function useSignInForm(): UseSignInPhoneReturnType {
   });
   const navigation = useNavigation();
 
-  const handleSubmit = useCallback(async (values: UseSignInFormValues) => {
-    console.log(values, 'values');
-  }, []);
+  const handleSubmit = useCallback(
+    async (values: UseSignInFormValues) => {
+      navigation.navigate(RootStackRouts.Tabs, {screen: TabsStackRouts.Home});
+    },
+    [navigation],
+  );
 
   return useMemo(
     () => ({

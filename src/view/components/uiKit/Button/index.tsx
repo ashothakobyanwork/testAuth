@@ -18,6 +18,7 @@ const Button: React.FC<Props> = ({
   children,
   textStyle,
   icon,
+  withShadow,
   ...buttonProps
 }) => {
   const {value, on, off} = useSwitchValue(false);
@@ -33,6 +34,7 @@ const Button: React.FC<Props> = ({
         containerStyle,
         value && {opacity: 0.8},
         disabled && styles.buttonDisabled,
+        withShadow && styles.shadow,
       ]}
       {...buttonProps}>
       <>
