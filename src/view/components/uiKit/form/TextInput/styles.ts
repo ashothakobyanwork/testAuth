@@ -1,4 +1,4 @@
-import {FontFamily, theme} from '~/view/styles/theme';
+import {FontFamily} from '~/view/styles/theme';
 import {getResponsiveHeight, getResponsiveValue} from '~/utils/responsive';
 import {StyleSheet} from 'react-native';
 

@@ -10,7 +10,7 @@ const colors: Theme['colors'] = {
   black: '#000000',
   blue: '#0077FF',
   primary: '#FF00B8',
-  gray: {1: '#F2F2F7', 0: '#BBBBC1'},
+  gray: {1: '#F2F2F7', 0: '#BBBBC1', 2: '#9B8B97'},
   orange: '#FB3F1C',
   errorBackground: '#FDF5F5',
 };
@@ -47,6 +47,11 @@ export const theme: Theme = {
       fontFamily: FontFamily.REGULAR,
       fontSize: getResponsiveValue(14),
       lineHeight: getResponsiveValue(24),
+    },
+    p3: {
+      fontFamily: FontFamily.MEDIUM,
+      fontSize: getResponsiveValue(16),
+      lineHeight: getResponsiveValue(28),
     },
   },
 };

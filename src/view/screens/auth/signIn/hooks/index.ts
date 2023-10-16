@@ -28,6 +28,9 @@ const validation = yup.object({
     .string()
     .required(formErrors.REQUIRED)
     .test('invalidPhoneNumber', formErrors.INVALID_PHONE_NUMBER, value => {
+      if (!value.startsWith('+')) {
+        return true;
+      }
       if (!value || !/^\+\d+$/.test(value)) {
         return false;
       }

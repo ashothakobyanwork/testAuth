@@ -15,7 +15,7 @@ export type Props = {
   inputStyle?: StyleProp<TextStyle>;
 } & TextInputProps;
 
-const TextInput: FC<Props> = ({style, disabled, error, ...textInputProps}) => {
+const TextInput: FC<Props> = ({style, disabled, ...textInputProps}) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const handleFocus: TextInputProps['onFocus'] = e => {
@@ -32,7 +32,7 @@ const TextInput: FC<Props> = ({style, disabled, error, ...textInputProps}) => {
     <>
       <BaseTextInput
         autoCapitalize="none"
-        style={[styles.main, isFocused && styles.focusedTextInput]}
+        style={[styles.main, isFocused && styles.focusedTextInput, style]}
         onFocus={handleFocus}
         onBlur={handleBlur}
         editable={!disabled}

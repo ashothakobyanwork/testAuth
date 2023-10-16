@@ -6,3 +6,4 @@ export {default as AppText} from './uiKit/AppText';
 export {default as Field} from './uiKit/form/Field';
 export {default as TextField} from './uiKit/form/TextField';
 export {default as TextInput} from './uiKit/form/TextInput';
+export {default as Button} from './uiKit/Button';

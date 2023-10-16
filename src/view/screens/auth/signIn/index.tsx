@@ -1,18 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {getResponsiveHeight, getResponsiveWidth} from '~/utils/responsive';
 import {
   AppText,
+  Button,
   MainContainer,
   StackHeader,
   SvgIcon,
   TextField,
 } from '~/view/components';
 import styles from './styles';
-import {View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import {useSignInForm} from './hooks';
+import {theme} from '~/view/styles/theme';
 
 const SignIn = () => {
-  const {form} = useSignInForm();
+  const {form, handleSubmit} = useSignInForm();
+  const [isPasswordViewed, setIsPasswordViewed] = useState<boolean>(false);
   return (
     <MainContainer withPadding>
       <StackHeader text="Авторизация" disabled />
@@ -23,7 +26,7 @@ const SignIn = () => {
         style={styles.logo}
       />
       <View style={styles.form}>
-        <AppText>Войти</AppText>
+        <AppText style={styles.loginText}>Войти</AppText>
         <TextField
           control={form.control}
           name="phoneOrLogin"
@@ -33,15 +36,47 @@ const SignIn = () => {
           control={form.control}
           name="password"
           placeholder="Пароль"
+          secureTextEntry={!isPasswordViewed}
+          autoComplete="password"
+          autoCapitalize="none"
           rightItemElement={
-            <SvgIcon
-              name="viewOff"
-              width={getResponsiveWidth(20)}
-              height={getResponsiveHeight(8)}
-            />
+            <Pressable
+              hitSlop={10}
+              onPress={() => setIsPasswordViewed(prevValue => !prevValue)}>
+              <SvgIcon
+                name={isPasswordViewed ? 'viewOn' : 'viewOff'}
+                width={getResponsiveWidth(20)}
+                height={
+                  isPasswordViewed
+                    ? getResponsiveHeight(14)
+                    : getResponsiveHeight(8)
+                }
+              />
+            </Pressable>
           }
         />
+        <Button
+          containerStyle={styles.button}
+          label="Войти"
+          onPress={handleSubmit}
+        />
+        <AppText color={theme.colors.gray[2]} variant="p2">
+          Не помню пароль
+        </AppText>
       </View>
+      <View style={styles.bottomContainer}>
+        <Button
+          icon="VK"
+          containerStyle={styles.vkButton}
+          label="Войти через Вконтакте"
+        />
+        <Button
+          icon="yandex"
+          containerStyle={styles.yandexButton}
+          label="Войти через Яндекс"
+        />
+      </View>
+      <AppText style={styles.signUpText}>Регистрация</AppText>
     </MainContainer>
   );
 };
