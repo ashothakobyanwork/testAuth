@@ -4,6 +4,7 @@ import {
   TextInput as BaseTextInput,
   TextInputProps,
   TextStyle,
+  View,
 } from 'react-native';
 
 import {theme} from '~/view/styles/theme';
@@ -29,7 +30,7 @@ const TextInput: FC<Props> = ({style, disabled, ...textInputProps}) => {
   };
 
   return (
-    <>
+    <View style={styles.container}>
       <BaseTextInput
         autoCapitalize="none"
         style={[styles.main, isFocused && styles.focusedTextInput, style]}
@@ -40,7 +41,7 @@ const TextInput: FC<Props> = ({style, disabled, ...textInputProps}) => {
         placeholderTextColor={theme.colors.gray[0]}
         {...textInputProps}
       />
-    </>
+    </View>
   );
 };
 

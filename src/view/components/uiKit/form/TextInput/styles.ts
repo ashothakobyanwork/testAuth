@@ -1,14 +1,19 @@
-import {FontFamily} from '~/view/styles/theme';
-import {getResponsiveHeight, getResponsiveValue} from '~/utils/responsive';
+import {FontFamily, theme} from '~/view/styles/theme';
+import {getResponsiveHeight, getResponsiveWidth} from '~/utils/responsive';
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   main: {
-    flex: 1,
-    height: getResponsiveHeight(22),
+    height: getResponsiveHeight(44),
+    minHeight: 44,
     fontFamily: FontFamily.Text,
-    fontSize: getResponsiveValue(17),
-    lineHeight: getResponsiveValue(19),
+    fontSize: getResponsiveWidth(17),
+    lineHeight: getResponsiveHeight(19),
+    borderRadius: 8,
+    color: theme.colors.black,
+  },
+  container: {
+    flex: 1,
   },
   focusedTextInput: {},
 });

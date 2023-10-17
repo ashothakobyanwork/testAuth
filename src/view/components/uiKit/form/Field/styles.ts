@@ -5,12 +5,14 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   mainWrapper: {
     height: getResponsiveHeight(66),
+    minHeight: 66,
     position: 'relative',
     width: '100%',
   },
   wrapper: {
     backgroundColor: theme.colors.gray[1],
     height: getResponsiveHeight(44),
+    minHeight: 44,
     borderRadius: 8,
     display: 'flex',
     justifyContent: 'center',
